@@ -9,7 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch config description worlds
+  DIRECTORY launch description worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
