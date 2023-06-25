@@ -14,7 +14,6 @@ def generate_launch_description():
          'frame_id': 'laser_frame',
          'angle_compensate': True,
          'scan_mode': 'Standard',
-         'publish_rate': 60
       }]
    )
       
