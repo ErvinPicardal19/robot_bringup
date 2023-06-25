@@ -21,7 +21,7 @@ diff_cont:
     wheel_separation: 0.3145
     wheel_radius: 0.04
 
-    use_stamped_vel: false
+    use_stamped_vel: true
 
 # joint_broad:
 #   ros__parameters:
