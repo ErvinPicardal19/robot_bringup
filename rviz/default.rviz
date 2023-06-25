@@ -52,13 +52,59 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        base_link:
+          Value: true
+        camera_link:
+          Value: true
+        camera_link_optical:
+          Value: true
+        chassis:
+          Value: true
+        front_caster_holder:
+          Value: true
+        front_caster_wheel:
+          Value: true
+        head:
+          Value: true
+        laser_frame:
+          Value: true
+        left_back_caster_holder:
+          Value: true
+        left_wheel:
+          Value: true
+        odom:
+          Value: true
+        right_back_caster_holder:
+          Value: true
+        right_wheel:
+          Value: true
       Marker Scale: 0.5
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        {}
+        odom:
+          base_link:
+            chassis:
+              camera_link:
+                camera_link_optical:
+                  {}
+              front_caster_holder:
+                front_caster_wheel:
+                  {}
+              head:
+                {}
+              laser_frame:
+                {}
+              left_back_caster_holder:
+                {}
+              right_back_caster_holder:
+                {}
+            left_wheel:
+              {}
+            right_wheel:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -79,6 +125,64 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_link_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        chassis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_caster_holder:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_caster_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        laser_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_back_caster_holder:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_back_caster_holder:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -180,26 +284,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/ThirdPersonFollower
-      Distance: 11.009162902832031
+      Class: rviz_default_plugins/Orbit
+      Distance: 1.9628114700317383
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.42076948285102844
-        Y: -3.4437413215637207
-        Z: 0
+        X: -0.1599038690328598
+        Y: -0.10062332451343536
+        Z: -0.3324317932128906
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4897974729537964
+      Pitch: 0.5247973203659058
       Target Frame: <Fixed Frame>
-      Value: ThirdPersonFollower (rviz_default_plugins)
-      Yaw: 4.81239128112793
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 4.847393989562988
     Saved: ~
 Window Geometry:
   Displays:
