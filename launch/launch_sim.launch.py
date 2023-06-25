@@ -54,7 +54,7 @@ def generate_launch_description():
    return LaunchDescription([
       DeclareLaunchArgument(
          name='use_ros2_control',
-         default_value='false',
+         default_value='true',
          description="Use ros2_control if true"
       ),
       
