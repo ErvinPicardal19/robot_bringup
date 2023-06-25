@@ -2,9 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
    <joint name="laser_joint" type="fixed">
-      <parent link="base_link"/>
+      <parent link="chassis"/>
       <child link="laser_frame"/>
-      <origin xyz="0 0 ${chassis_height + head_height + (wheel_thickness/2)}"/>
+      <origin xyz="${chassis_length/2} 0 ${chassis_height + head_height + (wheel_thickness/2)}"/>
    </joint>
 
    <link name="laser_frame">
