@@ -15,15 +15,15 @@ def generate_launch_description():
       parameters=[camera_config],
    )
       
-   rqt_image_viewer = Node(
-      package="rqt_image_view",
-      executable="rqt_image_view",
-      output="screen"
-   )
+   # rqt_image_viewer = Node(
+   #    package="rqt_image_view",
+   #    executable="rqt_image_view",
+   #    output="screen"
+   # )
    
    return LaunchDescription([
       camera_node,
-      rqt_image_viewer
+      # rqt_image_viewer
    ])
    
    

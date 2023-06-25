@@ -13,7 +13,8 @@ def generate_launch_description():
          'serial_port': rplidar_port,
          'frame_id': 'laser_frame',
          'angle_compensate': True,
-         'scan_mode': 'Standard'
+         'scan_mode': 'Standard',
+         'publish_rate': 60
       }]
    )
       

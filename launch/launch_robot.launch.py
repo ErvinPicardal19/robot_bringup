@@ -2,9 +2,9 @@ import os
 import xacro
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.substitutions import LaunchConfiguration
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler
-from launch.event_handlers import OnProcessExit
+from launch.substitutions import LaunchConfiguration, Command
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler, TimerAction
+from launch.event_handlers import OnProcessExit, OnProcessStart
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 
@@ -15,7 +15,7 @@ def generate_launch_description():
    
    
    pkg_directory = get_package_share_directory('robot_bringup')
-   gazebo_directory = get_package_share_directory('gazebo_ros')
+   
    
    rsp = IncludeLaunchDescription(
       PythonLaunchDescriptionSource([os.path.join(
@@ -23,26 +23,13 @@ def generate_launch_description():
       )]), launch_arguments={'use_sim_time': use_sim_time, 'use_ros2_control': use_ros2_control}.items()
    )
    
-   gazebo_params_file = os.path.join(pkg_directory,'config','gazebo_params.yaml')
+   robot_description = Command(["ros2 param get --hide-type /robot_state_publisher robot_description"])
+   controllers_param = os.path.join(pkg_directory, "config", "controllers.yaml")
    
-   gazebo = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
-                    launch_arguments={'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file}.items()
-             )
-   
-   spawn_entity_node = Node(
-      package="gazebo_ros",
-      executable="spawn_entity.py",
-      arguments=['-topic', 'robot_description',
-                 '-entity', 'robot'],
-      output='screen'
-   )
-   
-   diff_cont_controller = Node(
+   controller_manager = Node(
       package="controller_manager",
-      executable="spawner",
-      arguments=['diff_cont']
+      executable="ros2_control_node",
+      parameters=[{"robot_description": robot_description}, controllers_param]
    )
    
    joint_broad_controller = Node(
@@ -51,30 +38,36 @@ def generate_launch_description():
       arguments=['joint_broad']
    )
    
+   diff_cont_controller = Node(
+      package="controller_manager",
+      executable="spawner",
+      arguments=['diff_cont']
+   )
+   
    return LaunchDescription([
       DeclareLaunchArgument(
          name='use_ros2_control',
-         default_value='false',
+         default_value='true',
          description="Use ros2_control if true"
       ),
       
       DeclareLaunchArgument(
          name='use_sim_time',
-         default_value='true',
+         default_value='false',
          description='Use sim time if true'),
       
       
       RegisterEventHandler(
-         event_handler=OnProcessExit(
-            target_action=spawn_entity_node,
-            on_exit=[joint_broad_controller]
+         event_handler=OnProcessStart(
+            target_action=controller_manager,
+            on_start=[joint_broad_controller]
          )
       ),
       
       RegisterEventHandler(
-         event_handler=OnProcessExit(
-            target_action=joint_broad_controller,
-            on_exit=[diff_cont_controller]
+         event_handler=OnProcessStart(
+            target_action=controller_manager,
+            on_start=[diff_cont_controller]
          )
       ),
       
@@ -87,7 +80,5 @@ def generate_launch_description():
       
       
       rsp,
-      gazebo,
-      spawn_entity_node,
-      
+      TimerAction(period=3.0, actions=[controller_manager])
    ])
